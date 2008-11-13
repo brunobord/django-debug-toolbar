@@ -49,7 +49,7 @@ class SQLDebugPanel(DebugPanel):
     def title(self):
         self._sql_time = sum(map(lambda q: float(q['time']), connection.queries))
         return '%d SQL %s (%.2fms)' % (
-            len(connection.queries), 
+            len(connection.queries),
             (len(connection.queries) == 1) and 'query' or 'queries',
             self._sql_time
         )
@@ -91,5 +91,12 @@ class SQLDebugPanelLite(SQLDebugPanel):
     'Lite' Panel that displays information about the SQL queries run while processing
     the request.
     """
+
+    def title(self):
+        self.query_count = len(connection.queries)
+        return super(SQLDebugPanelLite, self).title()
+
     def content(self):
-        return ""
+        if self.query_count > 50:
+            return "Too many queries"
+        return super(SQLDebugPanelLite, self).content()
