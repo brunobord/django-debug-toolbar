@@ -85,3 +85,11 @@ def reformat_sql(sql):
     except ImportError:
         pass
     return sql
+
+class SQLDebugPanelLite(SQLDebugPanel):
+    """
+    'Lite' Panel that displays information about the SQL queries run while processing
+    the request.
+    """
+    def content(self):
+        return ""
